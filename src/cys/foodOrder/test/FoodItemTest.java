@@ -9,7 +9,7 @@ import cys.foodOrder.dao.FoodItemImpl;
 import cys.foodOrder.model.FoodItem;
 
 public class FoodItemTest {
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws  ClassNotFoundException,SQLException {
 		// TODO Auto-generated method stub
 		FoodItemImpl fi = new FoodItemImpl();
 		FoodItem food = new FoodItem();
@@ -118,7 +118,8 @@ public class FoodItemTest {
 			}
 				break;
 			case 5: {
-				fi.foodList();
+				System.out.println(fi.foodList());
+				System.out.println("\n");
 			}
 				break;
 			case 6: {
@@ -127,7 +128,6 @@ public class FoodItemTest {
 			}
 				break;
 			}
-
 		} while (loop == 1);
 	}
 }

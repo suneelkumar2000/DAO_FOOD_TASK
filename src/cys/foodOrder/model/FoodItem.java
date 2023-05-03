@@ -60,7 +60,7 @@ public class FoodItem {
 
 	@Override
 	public String toString() {
-		return "Books [food id= " + id + ", Name= " + name + ", Quantity = " + quantity + ", Unit Price= " + unitPrice
+		return "Food Items [food id= " + id + ", Name= " + name + ", Quantity = " + quantity + ", Unit Price= " + unitPrice
 				+ ", Item Category= " + itemCategory + "]";
 	}
 }

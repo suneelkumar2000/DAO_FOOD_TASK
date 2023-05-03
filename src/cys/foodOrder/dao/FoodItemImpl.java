@@ -61,7 +61,7 @@ public class FoodItemImpl implements FoodItemDAO{
 	public void findByName(String name) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection con = ConnectionUtil.getConnection();
-		String find = "selete id,name,quantity,unit_price,item_category from fooditem where name=?";
+		String find = "select id,name,quantity,unit_price,item_category from fooditem where name=?";
 		PreparedStatement ps = con.prepareStatement(find);
 		
 		ps.setString(1,name);
@@ -75,10 +75,11 @@ public class FoodItemImpl implements FoodItemDAO{
 	public void findById(int id) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection con = ConnectionUtil.getConnection();
-		String find = "selete id,name,quantity,unit_price,item_category from fooditem where id=?";
+		String find = "select id,name,quantity,unit_price,item_category from fooditem where id=?";
 		PreparedStatement ps = con.prepareStatement(find);
 		
 		ps.setInt(1, id);
+		
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			System.out.println(rs.getInt(1) + "\s" + rs.getString(2) + "\s" + rs.getInt(3) + "\s" + rs.getInt(4)+ "\s" + rs.getString(5));
@@ -90,10 +91,10 @@ public class FoodItemImpl implements FoodItemDAO{
 	public List<FoodItem> foodList() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection con = ConnectionUtil.getConnection();
-		String display = "selete id,name,quantity,unit_price,item_category from fooditem";
-		PreparedStatement prepareStatement = con.prepareStatement(display);
-		ResultSet rs = prepareStatement.executeQuery();
-		ArrayList List = new ArrayList();
+		String display = "select id,name,quantity,unit_price,item_category from fooditem";
+		PreparedStatement ps = con.prepareStatement(display);
+		ResultSet rs = ps.executeQuery();
+		ArrayList<FoodItem> List = new ArrayList<FoodItem>();
 		while (rs.next()) {
 			int id= rs.getInt(1);
 			String name = rs.getString(2);
