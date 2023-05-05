@@ -25,12 +25,11 @@ public class OrderImpl implements OrderDAO {
 		String insert = "insert into orders(id,date,customer_id,food_id,quantity)values(?,?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(insert);
 		
-		boolean num = val.numberValidation(order.getId());
 		boolean customerId = val.numberValidation(order.getCustomerId());
 		boolean foodId = val.numberValidation(order.getFoodId());
 		boolean quantity = val.numberValidation(order.getQuantity());
 		
-		if (num == true && customerId == true && foodId == true && quantity == true) {
+		if (customerId == true && foodId == true && quantity == true) {
 		ps.setInt(1, order.getId());
 		ps.setDate(2,sqldate);
 		ps.setInt(3, order.getCustomerId());
@@ -112,6 +111,54 @@ public class OrderImpl implements OrderDAO {
 		while (rs.next()) {
 			System.out.println(rs.getInt(1) + "\s" + rs.getDate(2) + "\s" + rs.getInt(3) + "\s" + rs.getInt(4)+ "\s" + rs.getInt(5));
 		}
+	}
+
+	@Override
+	public void display() throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Connection con = ConnectionUtil.getConnection();
+		String find = "select food_id from menu";
+		PreparedStatement ps = con.prepareStatement(find);
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			System.out.println("Food id: "+rs.getInt(1));
+		}
+	}
+	
+	public boolean customerLogin(int customerId) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Connection con = ConnectionUtil.getConnection();
+		String find = "select id from customer where id=?";
+		PreparedStatement ps = con.prepareStatement(find);
+		ps.setInt(1, customerId);
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			int id = rs.getInt(1);
+			if (customerId == id) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean adminLogin(String userName,String password) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Connection con = ConnectionUtil.getConnection();
+		String find = "select password from administrator where user_name=?";
+		PreparedStatement ps = con.prepareStatement(find);
+		ps.setString(1, userName);
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String pass = rs.getString(1);
+			if (password.equals(pass)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

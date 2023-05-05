@@ -19,23 +19,30 @@ public class CustomerImpl implements CustomerDAO {
 	public void insertCustomerDetails(Customer customer) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection con = ConnectionUtil.getConnection();
-		String insert = "insert into customer(id,email,phone_number,first_name,last_name) values(?,?,?,?,?)";
+		String insert = "insert into customer(email,phone_number,first_name,last_name) values(?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(insert);
 
-		boolean num = val.numberValidation(customer.getId());
 		boolean email = val.emailValidation(customer.getEmail());
 		boolean phone = val.phoneValidation(customer.getPhoneNumber());
 		boolean firstName = val.nameValidation(customer.getFirstName());
-		boolean lastName = val.nameValidation(customer.getFirstName());
+		boolean lastName = val.nameValidation(customer.getLastName());
 
-		if (num == true && email == true && phone == true && firstName == true && lastName == true) {
-			ps.setInt(1, customer.getId());
-			ps.setString(2, customer.getEmail());
-			ps.setLong(3, customer.getPhoneNumber());
-			ps.setString(4, customer.getFirstName());
-			ps.setString(5, customer.getLastName());
+		if (email == true && phone == true && firstName == true && lastName == true) {
+			ps.setString(1, customer.getEmail());
+			ps.setLong(2, customer.getPhoneNumber());
+			ps.setString(3, customer.getFirstName());
+			ps.setString(4, customer.getLastName());
 			int execute = ps.executeUpdate();
 			System.out.println(execute + " Inserted successfully");
+
+			String customerId = "select id from customer where email=?";
+			PreparedStatement ps1 = con.prepareStatement(customerId);
+			ps1.setString(1, customer.getEmail());
+			ResultSet rs = ps1.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				System.out.println("your Customer id is : " + id);
+			}
 		} else
 			System.out.println("Invalid Input");
 	}
@@ -70,7 +77,6 @@ public class CustomerImpl implements CustomerDAO {
 			Long phoneNo = rs.getLong(3);
 			String firstName = rs.getString(4);
 			String lastName = rs.getString(5);
-			int foodId = rs.getInt(6);
 			Customer customer = new Customer();
 			customer.setId(id);
 			customer.setEmail(email);
@@ -80,5 +86,22 @@ public class CustomerImpl implements CustomerDAO {
 			customerList.add(customer);
 		}
 		return customerList;
+	}
+	@Override
+	public boolean adminLogin(String userName,String password) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Connection con = ConnectionUtil.getConnection();
+		String find = "select password from administrator where user_name=?";
+		PreparedStatement ps = con.prepareStatement(find);
+		ps.setString(1, userName);
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String pass = rs.getString(1);
+			if (password.equals(pass)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

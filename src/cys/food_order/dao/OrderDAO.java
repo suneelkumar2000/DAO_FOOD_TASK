@@ -11,4 +11,7 @@ public interface OrderDAO {
 	public int deleteOrder(int id) throws ClassNotFoundException, SQLException;
 	public List<Order> orderList() throws ClassNotFoundException, SQLException;
 	public void findById(int id) throws ClassNotFoundException, SQLException;
+	public void display()throws ClassNotFoundException, SQLException;
+	public boolean customerLogin(int customerId) throws ClassNotFoundException, SQLException;
+	public boolean adminLogin(String userName,String password) throws ClassNotFoundException, SQLException ;
 }

@@ -18,43 +18,62 @@ public class OrderTest {
 			int option = sc.nextInt();
 			switch (option) {
 			case 1: {
-				System.out.print("Enter order ID: ");
-				int id = sc.nextInt();
-				order.setId(id);
-
-				System.out.print("Enter Customer Id: ");
+				System.out.println("enter your Customer id:");
 				int customerId = sc.nextInt();
-				order.setCustomerId(customerId);
+				boolean customerLogin = or.customerLogin(customerId);
+				if (customerLogin == true) {
 
-				System.out.print("Enter Food Id: ");
-				int foodId = sc.nextInt();
-				order.setFoodId(foodId);
+					or.display();
 
-				System.out.print("Enter Food Quantity: ");
-				int quantity = sc.nextInt();
-				order.setQuantity(quantity);
+					order.setCustomerId(customerId);
 
-				or.insertOrder(order);
-				System.out.println("\n");
+					System.out.print("Enter Food Id: ");
+					int foodId = sc.nextInt();
+					order.setFoodId(foodId);
+
+					System.out.print("Enter Food Quantity: ");
+					int quantity = sc.nextInt();
+					order.setQuantity(quantity);
+
+					or.insertOrder(order);
+					System.out.println("\n");
+				} else
+					System.out.println("Invalid Customer Id");
 			}
 				break;
 			case 2: {
-				System.out.print("Enter order ID to update:");
-				int id = sc.nextInt();
+				System.out.println("Enter admin User name:");
+				String userName = sc.next();
+				System.out.println("Enter admin password:");
+				String password = sc.next();
+				boolean adminLogin = or.adminLogin(userName, password);
+				if (adminLogin == true) {
+					System.out.print("Enter order ID to update:");
+					int id = sc.nextInt();
 
-				System.out.print("Enter New Quantity: ");
-				int quantity = sc.nextInt();
+					System.out.print("Enter New Quantity: ");
+					int quantity = sc.nextInt();
 
-				or.updateOrderQuantity(id, quantity);
-				System.out.println("\n");
+					or.updateOrderQuantity(id, quantity);
+					System.out.println("\n");
+				} else
+					System.out.println("Invalid User name and password");
 			}
 				break;
 			case 3: {
-				System.out.print("Enter order ID to delete: ");
-				int id = sc.nextInt();
+				System.out.println("Enter admin User name:");
+				String userName = sc.next();
+				System.out.println("Enter admin password:");
+				String password = sc.next();
+				boolean adminLogin = or.adminLogin(userName, password);
+				if (adminLogin == true) {
+					System.out.print("Enter order ID to delete: ");
+					int id = sc.nextInt();
 
-				System.out.println(or.deleteOrder(id) + " Deleted successfully");
-				System.out.println("\n");
+					System.out.println(or.deleteOrder(id) + " Deleted successfully");
+					System.out.println("\n");
+				} else
+					System.out.println("Invalid User name and password");
 
 			}
 				break;

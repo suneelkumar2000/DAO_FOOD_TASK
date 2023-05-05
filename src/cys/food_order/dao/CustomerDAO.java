@@ -9,4 +9,5 @@ public interface CustomerDAO {
 	public void insertCustomerDetails(Customer customer)throws ClassNotFoundException, SQLException;
 	public int deleteCustomerDetails(int id)throws ClassNotFoundException, SQLException;
 	public List<Customer> customerList()throws ClassNotFoundException, SQLException;
+	public boolean adminLogin(String userName,String password) throws ClassNotFoundException, SQLException;
 }

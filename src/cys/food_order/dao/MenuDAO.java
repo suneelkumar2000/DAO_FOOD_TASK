@@ -12,4 +12,7 @@ public interface MenuDAO {
 	public void findByFoodId(int food_id)throws ClassNotFoundException, SQLException;
 	public void findById(int id)throws ClassNotFoundException, SQLException;
 	public List<Menu> menuList()throws ClassNotFoundException, SQLException;
+	public void display()throws ClassNotFoundException, SQLException;
+	public boolean customerLogin(int customerId)throws ClassNotFoundException, SQLException;
+	public boolean adminLogin(String userName,String password)throws ClassNotFoundException, SQLException;
 }

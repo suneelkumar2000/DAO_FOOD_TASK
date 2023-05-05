@@ -21,9 +21,6 @@ public class CustomerTest {
 			int option = sc.nextInt();
 			switch (option) {
 			case 1: {
-				System.out.print("Enter Customer ID: ");
-				int id = sc.nextInt();
-				customer.setId(id);
 				System.out.print("Enter Email ID: ");
 				String email = sc.next();
 				customer.setEmail(email);
@@ -41,11 +38,19 @@ public class CustomerTest {
 			}
 				break;
 			case 2: {
-				System.out.print("Enter Customer ID to delete: ");
-				int id = sc.nextInt();
+				System.out.println("Enter admin User name:");
+				String userName = sc.next();
+				System.out.println("Enter admin password:");
+				String password = sc.next();
+				boolean adminLogin = cus.adminLogin(userName, password);
+				if (adminLogin == true) {
+					System.out.print("Enter Customer ID to delete: ");
+					int id = sc.nextInt();
 
-				System.out.println(cus.deleteCustomerDetails(id) + " Deleted successfully");
-				System.out.println("\n");
+					System.out.println(cus.deleteCustomerDetails(id) + " Deleted successfully");
+					System.out.println("\n");
+				} else
+					System.out.println("Invalid User name and password");
 
 			}
 				break;

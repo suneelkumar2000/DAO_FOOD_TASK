@@ -17,38 +17,37 @@ public class PaymentImpl implements PaymentDAO {
 	Validation val = new Validation();
 	Date date = new Date();
 	java.sql.Date sqldate = new java.sql.Date(date.getTime());
+
 	@Override
 	public void insertPayment(Payment payment) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection con = ConnectionUtil.getConnection();
-		String insert = "insert into payment(id,date,customer_id,order_id)values(?,?,?,?)";
+		String insert = "insert into payment(date,customer_id,order_id)values(?,?,?)";
 		PreparedStatement ps = con.prepareStatement(insert);
-		
-		boolean num = val.numberValidation(payment.getId());
+
 		boolean customerId = val.numberValidation(payment.getCustomerId());
 		boolean orderId = val.numberValidation(payment.getOrderId());
-		if(num == true && customerId == true && orderId == true) {
-		ps.setInt(1, payment.getId());
-		ps.setDate(2, sqldate);
-		ps.setInt(3, payment.getCustomerId());
-		ps.setInt(4, payment.getOrderId());
-		int execute = ps.executeUpdate();
+		if (customerId == true && orderId == true) {
+			ps.setDate(1, sqldate);
+			ps.setInt(2, payment.getCustomerId());
+			ps.setInt(3, payment.getOrderId());
+			int execute = ps.executeUpdate();
 
-		String find = "select quantity,unit_price from Orderiteam where order_id=?";
-		PreparedStatement ps1 = con.prepareStatement(find);
-		ps1.setInt(1, payment.getOrderId());
-		ResultSet rs = ps1.executeQuery();
-		while (rs.next()) {
-			int quantity = rs.getInt(1);
-			int Price = rs.getInt(2);
-			int amount = quantity * Price;
-			String insert1 = "update payment set amount = ? where order_id = ?";
-			PreparedStatement ps2 = con.prepareStatement(insert1);
-			ps2.setInt(1, amount);
-			ps2.setInt(2, payment.getOrderId());
-			ps2.executeUpdate();
-		}
-		System.out.println(execute + " Inserted successfully");
+			String find = "select quantity,unit_price from Orderiteam where order_id=?";
+			PreparedStatement ps1 = con.prepareStatement(find);
+			ps1.setInt(1, payment.getOrderId());
+			ResultSet rs = ps1.executeQuery();
+			while (rs.next()) {
+				int quantity = rs.getInt(1);
+				int Price = rs.getInt(2);
+				int amount = quantity * Price;
+				String insert1 = "update payment set amount = ? where order_id = ?";
+				PreparedStatement ps2 = con.prepareStatement(insert1);
+				ps2.setInt(1, amount);
+				ps2.setInt(2, payment.getOrderId());
+				ps2.executeUpdate();
+			}
+			System.out.println(execute + " Inserted successfully");
 		} else
 			System.out.println("Invalid Input");
 	}
@@ -70,7 +69,7 @@ public class PaymentImpl implements PaymentDAO {
 
 			Payment payment = new Payment();
 			payment.setId(id);
-			payment.setDate((java.sql.Date)date);
+			payment.setDate((java.sql.Date) date);
 			payment.setCustomerId(customerId);
 			payment.setOrderId(orderId);
 			payment.setAmount(amount);

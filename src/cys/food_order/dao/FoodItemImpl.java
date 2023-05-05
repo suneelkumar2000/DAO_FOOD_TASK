@@ -19,21 +19,19 @@ public class FoodItemImpl implements FoodItemDAO {
 	public void insertFoodDetails(FoodItem food) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection con = ConnectionUtil.getConnection();
-		String insert = "insert into fooditem(id,name,quantity,unit_price,item_category) values(?,?,?,?,?)";
+		String insert = "insert into fooditem(name,quantity,unit_price,item_category) values(?,?,?,?)";
 		PreparedStatement ps = con.prepareStatement(insert);
 
-		boolean num = val.numberValidation(food.getId());
 		boolean name = val.nameValidation(food.getName());
 		boolean quantity = val.numberValidation(food.getQuantity());
 		boolean unitPrice = val.numberValidation(food.getUnitPrice());
 		boolean itemCategory = val.nameValidation(food.getItemCategory());
 
-		if (num == true && name == true && quantity == true && unitPrice == true && itemCategory == true) {
-			ps.setInt(1, food.getId());
-			ps.setString(2, food.getName());
-			ps.setInt(3, food.getQuantity());
-			ps.setInt(4, food.getUnitPrice());
-			ps.setString(5, food.getItemCategory());
+		if (name == true && quantity == true && unitPrice == true && itemCategory == true) {
+			ps.setString(1, food.getName());
+			ps.setInt(2, food.getQuantity());
+			ps.setInt(3, food.getUnitPrice());
+			ps.setString(4, food.getItemCategory());
 
 			int execute = ps.executeUpdate();
 			System.out.println(execute + " Inserted successfully");
@@ -129,6 +127,23 @@ public class FoodItemImpl implements FoodItemDAO {
 			foodList.add(food);
 		}
 		return foodList;
+	}
+	@Override
+	public boolean adminLogin(String userName,String password) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		Connection con = ConnectionUtil.getConnection();
+		String find = "select password from administrator where user_name=?";
+		PreparedStatement ps = con.prepareStatement(find);
+		ps.setString(1, userName);
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String pass = rs.getString(1);
+			if (password.equals(pass)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

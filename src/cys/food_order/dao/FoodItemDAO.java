@@ -14,4 +14,5 @@ public interface FoodItemDAO {
 	public void findByName(String name)throws ClassNotFoundException, SQLException;
 	public void findById(int id)throws ClassNotFoundException, SQLException;
 	public List<FoodItem> foodList()throws ClassNotFoundException, SQLException;
+	public boolean adminLogin(String userName,String password) throws ClassNotFoundException, SQLException ;
 }
