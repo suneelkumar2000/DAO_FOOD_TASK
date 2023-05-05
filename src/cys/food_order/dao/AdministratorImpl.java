@@ -62,15 +62,15 @@ public class AdministratorImpl implements AdministratorDAO{
 	public List<Administrator> administratorList() throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Connection con = ConnectionUtil.getConnection();
-		String display = "select id,name,user_name,password from customer";
+		String display = "select id,name,user_name,password from administrator";
 		PreparedStatement ps = con.prepareStatement(display);
 		ResultSet rs = ps.executeQuery();
 		ArrayList<Administrator> AdminList = new ArrayList<Administrator>();
 		while (rs.next()) {
 			int id = rs.getInt(1);
 			String name = rs.getString(2);
-			String userName = rs.getString(4);
-			String password = rs.getString(5);
+			String userName = rs.getString(3);
+			String password = rs.getString(4);
 			Administrator admin = new Administrator();
 			admin.setId(id);
 			admin.setName(name);
